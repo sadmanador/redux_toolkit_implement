@@ -1,24 +1,17 @@
-"use client"
-import React, { useState } from "react";
-import Count from "./Count";
+
+import { CounterProps } from "@/types";
 import Button from "./Button";
+import Count from "./Count";
 
-const Counter = () => {
-  const [count, setCount] = useState(0);
+const Counter:React.FC<CounterProps> = ({count, onIncrement, onDecrement}) => {
 
-  const handleIncrement = () => {
-    setCount((prevCount) => prevCount + 1);
-  };
-  const handleDecrement = () => {
-    setCount((prevCount) => prevCount - 1);
-  };
 
   return (
     <div className="p-4 h-auto flex flex-col items-center justify-center space-y-5 bg-white rounded shadow">
       <Count count={count} />
       <div className="flex space-x-3">
-        <Button handler={handleIncrement} type={"danger"}>Increment</Button>
-        <Button handler={handleDecrement} type={"normal"}>Decrement</Button>
+        <Button handler={onIncrement} type={"normal"}>Increment</Button>
+        <Button handler={onDecrement} type={"danger"}>Decrement</Button>
       </div>
     </div>
   );
