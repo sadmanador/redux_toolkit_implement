@@ -17,3 +17,15 @@ export type ButtonProps = {
   type: "normal" | "danger";
   children: React.ReactNode;
 };
+
+export type Counter = {
+  id: number;
+  value: number;
+};
+
+export type CounterContextProps = {
+  counters: Counter[];
+  totalCount: number;
+  handleIncrement: (counterId: number) => void;
+  handleDecrement: (counterId: number) => void;
+};

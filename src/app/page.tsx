@@ -1,36 +1,14 @@
 "use client";
 import Counter from "@/components/Counter";
 import Stats from "@/components/Stats";
-import { useState } from "react";
+import { CounterContext } from "@/context/CounterContext";
 
-const initialCounters = [
-  { id: 1, value: 0 },
-  { id: 2, value: 0 },
-];
+import { Counter as CounterType } from "@/types";
+import { useContext } from "react";
 
-export default function Home() {
-  const [counters, setCounters] = useState(initialCounters);
-  const totalCount = counters.reduce((acc, counter) => acc + counter.value, 0);
-
-  const handleIncrement = (counterId: number) => {
-    const updatedCounters = counters.map((counter) => {
-      if (counter.id === counterId) {
-        return { ...counter, value: counter.value + 1 };
-      }
-      return counter;
-    });
-    setCounters(updatedCounters);
-  };
-
-  const handleDecrement = (counterId: number) => {
-    const updatedCounters = counters.map((counter) => {
-      if (counter.id === counterId) {
-        return { ...counter, value: counter.value - 1 };
-      }
-      return counter;
-    });
-    setCounters(updatedCounters);
-  };
+const HomeContent = () => {
+  const { counters, totalCount, handleIncrement, handleDecrement } =
+    useContext(CounterContext);
 
   return (
     <div className="w-screen h-screen p-10 bg-gray-100 text-slate-700">
@@ -39,7 +17,7 @@ export default function Home() {
       </h1>
 
       <div className="max-w-md mx-auto mt-10 space-y-5">
-        {counters.map((counter) => (
+        {counters.map((counter: CounterType) => (
           <Counter
             key={counter.id}
             count={counter.value}
@@ -51,4 +29,6 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+
+export default HomeContent;
