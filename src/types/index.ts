@@ -17,3 +17,5 @@ export type ButtonProps = {
   type: "normal" | "danger";
   children: React.ReactNode;
 };
+
+export type Counters = { id: number; value: number };

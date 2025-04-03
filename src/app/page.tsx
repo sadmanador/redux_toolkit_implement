@@ -1,36 +1,20 @@
 "use client";
+import { useDispatch, useSelector } from "react-redux";
 import Counter from "@/components/Counter";
 import Stats from "@/components/Stats";
-import { useState } from "react";
-
-const initialCounters = [
-  { id: 1, value: 0 },
-  { id: 2, value: 0 },
-];
+import { decrement, increment } from "@/features/counters/countersSlice";
+import { Counters } from "@/types";
+import { RootState } from "@/redux/store";
 
 export default function Home() {
-  const [counters, setCounters] = useState(initialCounters);
+  const counters = useSelector((state: RootState) => state.counters);
+  const dispatch = useDispatch();
+
   const totalCount = counters.reduce((acc, counter) => acc + counter.value, 0);
 
-  const handleIncrement = (counterId: number) => {
-    const updatedCounters = counters.map((counter) => {
-      if (counter.id === counterId) {
-        return { ...counter, value: counter.value + 1 };
-      }
-      return counter;
-    });
-    setCounters(updatedCounters);
-  };
+  const handleIncrement = (counterId: number) => dispatch(increment(counterId));
 
-  const handleDecrement = (counterId: number) => {
-    const updatedCounters = counters.map((counter) => {
-      if (counter.id === counterId) {
-        return { ...counter, value: counter.value - 1 };
-      }
-      return counter;
-    });
-    setCounters(updatedCounters);
-  };
+  const handleDecrement = (counterId: number) => dispatch(decrement(counterId));
 
   return (
     <div className="w-screen h-screen p-10 bg-gray-100 text-slate-700">
@@ -39,7 +23,7 @@ export default function Home() {
       </h1>
 
       <div className="max-w-md mx-auto mt-10 space-y-5">
-        {counters.map((counter) => (
+        {counters.map((counter: Counters) => (
           <Counter
             key={counter.id}
             count={counter.value}
